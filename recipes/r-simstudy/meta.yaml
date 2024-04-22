@@ -58,7 +58,7 @@ test:
 
 about:
   home: https://github.com/kgoldfeld/simstudy, https://kgoldfeld.github.io/simstudy/, https://kgoldfeld.github.io/simstudy/dev/
-  license: GPL-3
+  license: GPL-3.0-or-later
   summary: Simulates data sets in order to explore modeling techniques or better understand data
     generating processes. The user specifies a set of relationships between covariates,
     and generates data based on these specifications. The final data sets can represent
