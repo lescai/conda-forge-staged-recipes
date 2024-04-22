@@ -1,4 +1,5 @@
 {% set version = '0.7.1' %}
+
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
 
@@ -14,11 +15,16 @@ source:
 
 build:
   merge_build_host: True  # [win]
+  # If this is a new build for the same version, increment the build number.
   number: 0
+  # no skip
+
+  # This is required to make R link correctly on Linux.
   rpaths:
     - lib/R/lib/
     - lib/
 
+# Suggests: covr, dplyr, formatR, gee, ggplot2, grid, gridExtra, hedgehog, knitr, magrittr, Matrix, mgcv, ordinal, pracma, rmarkdown, scales, splines, survival, testthat, gtsummary, survminer, katex, dirmult, rms
 requirements:
   build:
     - {{ compiler('c') }}              # [not win]
@@ -30,7 +36,7 @@ requirements:
     - {{ posix }}sed               # [win]
     - {{ posix }}coreutils         # [win]
     - {{ posix }}zip               # [win]
-    - cross-r-base {{ r_base }}    # [build_platform != target_platform]
+
   host:
     - r-base >=4.1.*
     - r-rcpp
@@ -40,9 +46,10 @@ requirements:
     - r-glue
     - r-mvnfast
     - r-pbv >=0.4_22
+
   run:
     - r-base >=4.1.*
-    - {{ native }}gcc-libs         # [win]
+    - {{native}}gcc-libs         # [win]
     - r-rcpp
     - r-backports
     - r-data.table
@@ -53,8 +60,15 @@ requirements:
 
 test:
   commands:
+    # You can put additional test commands to be run here.
     - $R -e "library('simstudy')"           # [not win]
     - "\"%R%\" -e \"library('simstudy')\""  # [win]
+
+  # You can also put a file called run_test.py, run_test.sh, or run_test.bat
+  # in the recipe that will be run at test time.
+
+  # requires:
+    # Put any additional test requirements here.
 
 about:
   home: https://github.com/kgoldfeld/simstudy, https://kgoldfeld.github.io/simstudy/, https://kgoldfeld.github.io/simstudy/dev/
@@ -68,12 +82,10 @@ about:
   license_family: GPL3
   license_file:
     - '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-3'
+
+# The original CRAN metadata for this package was:
+
 # Type: Package
-
-extra:
-  recipe-maintainers:
-    - conda-forge/r
-
 # Package: simstudy
 # Title: Simulation of Study Data
 # Version: 0.7.1
@@ -96,3 +108,7 @@ extra:
 # Maintainer: Keith Goldfeld <keith.goldfeld@nyulangone.org>
 # Repository: CRAN
 # Date/Publication: 2023-11-23 01:00:02 UTC
+
+# See
+# https://docs.conda.io/projects/conda-build for
+# more information about meta.yaml
