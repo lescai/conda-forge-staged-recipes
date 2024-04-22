@@ -39,7 +39,7 @@ requirements:
     - r-fastglm
     - r-glue
     - r-mvnfast
-    - r-pbv >=0.4_22
+    - r-pbv
   run:
     - r-base
     - {{ native }}gcc-libs         # [win]
